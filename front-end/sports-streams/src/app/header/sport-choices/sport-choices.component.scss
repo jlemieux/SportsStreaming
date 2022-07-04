@@ -1,0 +1,6 @@
+.sport-choices-container {
+  display: flex; // flex container
+  flex-flow: row nowrap; // main axis=left->right, dont wrap into a second row
+  justify-content: space-evenly; // justify-content=main axis. start at the left -> go towards the right without extra spacing
+  align-items: stretch; // align-items=cross axis (top->bottom). we want it to stretch to fill
+}
