@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject } from 'rxjs';
+import { catchError, EMPTY, Observable, ReplaySubject, tap, throwError } from 'rxjs';
 import { Game } from '../models/game';
 import { Sport } from '../models/sport';
+import { GameStream, GameStreamError } from '../models/stream';
 import { SportsService } from './sports.service';
 
 @Injectable({
@@ -10,70 +11,11 @@ import { SportsService } from './sports.service';
 })
 export class GamesService {
 
-  mockGames: Game[] = [
-    {
-      team1: 'BuccsBuccsBuccsBuccsBuccs',
-      team2: 'PatsBuccsBuccsBuccsBuccs',
-      score: '4-18',
-      time: '18:00',
-      link: 'link-to-stream'
-    },
-    {
-      team1: 'Falcons',
-      team2: 'Tigers',
-      score: '3-22',
-      time: '7:20',
-      link: 'link-to-stream'
-    },
-    {
-      team1: 'GiantsGiantsGiantsGiantsGiants',
-      team2: 'JetsJetsJetsJets',
-      score: '0-0',
-      time: '3RD INNING',
-      link: 'link-to-stream'
-    },
-    {
-      team1: 'Stealers',
-      team2: 'Vikings',
-      score: '34-14',
-      time: 'STARTED',
-      link: 'link-to-stream'
-    },
-  ];
-
-  otherMockGames: Game[] = [
-    {
-      team1: 'Panthers',
-      team2: 'Panthers',
-      score: '2-50',
-      time: '23:00',
-      link: 'link-to-stream'
-    },
-    {
-      team1: 'Chiefs',
-      team2: 'Chiefs',
-      score: '19-4',
-      time: '9:30',
-      link: 'link-to-stream'
-    },
-    {
-      team1: 'Dolphins',
-      team2: 'Dolphins',
-      score: '3-3',
-      time: '5th BOTTOM',
-      link: 'link-to-stream'
-    },
-    {
-      team1: 'Home',
-      team2: 'Away',
-      score: '20-20',
-      time: 'PLAYING',
-      link: 'link-to-stream'
-    },
-  ];
-
   games$ = new ReplaySubject<Observable<Game[]>>(1);
   private games: SportToGames = {} as SportToGames;
+
+  // infinite buffer, so swapping sports will remember which streams have errored
+  gameStreamError$ = new ReplaySubject<GameStreamError>();
 
   constructor(
     private http: HttpClient,
@@ -93,20 +35,41 @@ export class GamesService {
   }
 
   private fetchGames(sport: Sport): void {
-    if (sport === Sport.BASEBALL) {
-      this.http.get<Game[]>(`http://localhost:5000/${sport}`).subscribe((games: Game[]) => {
+    const supportedSports = [Sport.BASEBALL];
+    if (!supportedSports.includes(sport)) {
+      this.games[sport].next([]);
+      return;
+    }
+    this.http.get<Game[]>(`http://localhost:5000/${sport}`).subscribe({
+      next: (games: Game[]) => {
         this.games[sport].next(games);
-      });
-    }
-    else {
-      this.games[sport].next([Sport.BASEBALL, Sport.FOOTBALL].includes(sport) ? this.mockGames : this.otherMockGames);
-    }
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          this.games[sport].next([])
+        }
+        // if 500 error, just leave screen blank for now...
+      }
+    });
   }
 
-  watchStream(id: string): void {
-    this.http.get<{link: string}>(`http://localhost:5000/baseball/${id}`).subscribe(resp => {
-      window.open(resp.link, '_blank');
-    });
+  watchStream(id: string): Observable<GameStream> {
+    return this.http.get<GameStream>(`http://localhost:5000/baseball/${id}`).pipe(
+      tap((stream: GameStream) => window.open(stream.link, '_blank')),
+      catchError((error: HttpErrorResponse) => {
+        const message = { gameId: id, reason: 'Error!' };
+        if (error.status === 404) {
+          if (error.error.name === 'NoWeakSpellFound') {
+            message.reason = 'No Weak_Spell';
+          }
+          else if (error.error.name === 'NoStreamersFound') {
+            message.reason = 'No Streamers';
+          }
+        }
+        this.gameStreamError$.next(message);
+        return EMPTY;
+      })
+    );
   }
 
 }

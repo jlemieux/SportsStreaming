@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
 import { Game } from 'src/app/shared/models/game';
+import { Sport } from 'src/app/shared/models/sport';
 import { GamesService } from 'src/app/shared/services/games.service';
+import { SportsService } from 'src/app/shared/services/sports.service';
 
 @Component({
   selector: 'app-game-choices',

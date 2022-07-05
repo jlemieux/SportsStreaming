@@ -1,3 +1,4 @@
-<div class="game-choices-container">
-  <app-game-choice *ngFor="let game of games$ | async" [game]="game"></app-game-choice>
+<div class="game-choices-container" *ngIf="games$ | async as games">
+  <app-no-games-found *ngIf="games.length === 0"></app-no-games-found>
+  <app-game-choice *ngFor="let game of games" [game]="game"></app-game-choice>
 </div>
