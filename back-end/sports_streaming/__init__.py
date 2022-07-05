@@ -23,17 +23,24 @@ def create_app():
   from flask import Flask
   from flask_cors import CORS
   import config
-  from sports_streaming import util
+  from sports_streaming import util, blueprints
 
   app = Flask(__name__)
   app.config.from_object(config)
   CORS(app)
 
-  from sports_streaming.games.baseball.controller import api as baseball_api
-  app.register_blueprint(baseball_api)
+  app.register_blueprint(blueprints.api) # register app level
+
+  # api = Blueprint('sports_streaming', __name__) # app level blueprint
+
+  # # blueprint modules
+  # from sports_streaming.games.baseball.controller import api as baseball_api
+  # api.register_blueprint(baseball_api) # register to 'api', not 'app'
+
+  # app.register_blueprint(api) # register app level
 
   app.register_error_handler(Exception, util.errors.handle_exception)
 
-  filter_loggers()
+  filter_loggers() # do this at the end so all the modules are imported & shown in loggerDict
 
   return app
