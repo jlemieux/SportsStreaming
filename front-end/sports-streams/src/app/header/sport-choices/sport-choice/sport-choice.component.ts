@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Sport } from 'src/app/shared/models/sport';
 import { SportsService } from 'src/app/shared/services/sports.service';
 
@@ -10,8 +11,11 @@ import { SportsService } from 'src/app/shared/services/sports.service';
 export class SportChoiceComponent implements OnInit {
 
   @Input() sport!: Sport;
+  activeSport$: Observable<Sport>;
 
-  constructor(private sportsService: SportsService) { }
+  constructor(private sportsService: SportsService) {
+    this.activeSport$ = this.sportsService.activeSport$;
+  }
 
   chooseSport(): void {
     this.sportsService.activeSport$.next(this.sport);

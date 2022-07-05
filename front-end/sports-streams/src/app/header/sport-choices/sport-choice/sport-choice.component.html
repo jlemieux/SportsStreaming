@@ -1,3 +1,12 @@
-<button class="btn btn-primary" (click)="chooseSport()">
+
+<button
+  *ngIf="activeSport$ | async as activeSport"
+  [ngClass]="{
+    'btn': true,
+    'btn-lg': true,
+    'btn-secondary': sport !== activeSport,
+    'btn-primary': sport === activeSport
+  }"
+  (click)="chooseSport()">
   {{ sport | titlecase }}
 </button>
