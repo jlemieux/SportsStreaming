@@ -1,21 +1,22 @@
 #!/bin/bash
 
 NG_PORT=9200
-FLASK_PORT=NG_PORT + 1
+FLASK_PORT=$((NG_PORT + 1))
 HOST="0.0.0.0"
+APP_DIR="$(dirname $(dirname $(realpath $0)))"
+BACKEND=$APP_DIR/back-end
+FRONTEND=$APP_DIR/front-end/sports-streams
 
-export FLASK_APP=../back-end/wsgi.py
+export FLASK_APP=wsgi.py
 export FLASK_ENV=production
 export FLASK_RUN_PORT=$FLASK_PORT
 export FLASK_RUN_HOST=$HOST
 
-# source ../back-end/venv/bin/activate
-# flask run
-echo "--- flask run ---"
-pwd
+cd $BACKEND
+source ./venv/bin/activate
+flask run &
 
-cd ../front-end/sports-streams
-echo "--- cd ../front-end/sports-streams ---"
+cd $FRONTEND
 pwd
 
 echo $NG_PORT
