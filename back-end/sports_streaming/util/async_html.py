@@ -1,14 +1,17 @@
 from requests_html import AsyncHTMLSession
 import pyppeteer
+from sports_streaming.util import singletons
 
 
 # https://github.com/psf/requests-html/issues/293#issuecomment-536320351
+@singletons.Singleton
 class AsyncHTMLSessionFixed(AsyncHTMLSession):
   """
   pip3 install websockets==6.0 --force-reinstall
   """
   def __init__(self, **kwargs):
-    super(AsyncHTMLSessionFixed, self).__init__(**kwargs)
+    # super(AsyncHTMLSessionFixed, self).__init__(**kwargs)
+    super().__init__(**kwargs)
     self.__browser_args = kwargs.get("browser_args", ["--no-sandbox"])
 
   @property

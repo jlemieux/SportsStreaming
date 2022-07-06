@@ -15,6 +15,8 @@ import { ScoreAndTimeComponent } from './content/game-choices/game-choice/score-
 import { WatchButtonComponent } from './content/game-choices/game-choice/watch-button/watch-button.component';
 import { NoGamesFoundComponent } from './content/game-choices/no-games-found/no-games-found.component';
 import { ShutdownComponent } from './header/sport-choices/shutdown/shutdown.component';
+import { ContainerComponent } from './container/container.component';
+import { BaseballStreamComponent } from './shared/baseball-stream/baseball-stream.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { ShutdownComponent } from './header/sport-choices/shutdown/shutdown.comp
     ScoreAndTimeComponent,
     WatchButtonComponent,
     NoGamesFoundComponent,
-    ShutdownComponent
+    ShutdownComponent,
+    ContainerComponent,
+    BaseballStreamComponent
   ],
   imports: [
     BrowserModule,

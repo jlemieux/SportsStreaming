@@ -57,7 +57,13 @@ export class GamesService {
 
   watchStream(id: string): Observable<GameStream> {
     return this.http.get<GameStream>(`${environment.HOST}/baseball/${id}`).pipe(
-      tap((stream: GameStream) => window.open(stream.link, '_blank')),
+      tap((stream: GameStream) => {
+        // const baseEncoded = btoa(stream.link);
+        // const encoded = encodeURI(baseEncoded);
+        const encoded = encodeURI(stream.link);
+        const url = `${window.location.origin}/baseball-stream?link=${encoded}`;
+        window.open(url, '_blank');
+      }),
       catchError((error: HttpErrorResponse) => {
         const message = { gameId: id, reason: 'Error!' };
         if (error.status === 404) {
