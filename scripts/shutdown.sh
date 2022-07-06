@@ -27,4 +27,4 @@ then
     kill -9 $pid
     echo "Killed."
 fi
-#sudo shutdown -h now
+sudo shutdown -h now

@@ -5,7 +5,7 @@ FLASK_PORT=$((NG_PORT + 1))
 HOST="0.0.0.0"
 APP_DIR="$(dirname $(dirname $(realpath $0)))"
 BACKEND=$APP_DIR/back-end
-FRONTEND=$APP_DIR/front-end/sports-streams/dist/sports-streams
+FRONTEND=$APP_DIR/front-end-build
 
 export FLASK_APP=wsgi.py
 export FLASK_ENV=production
