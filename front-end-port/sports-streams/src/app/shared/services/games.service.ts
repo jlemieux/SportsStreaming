@@ -61,7 +61,7 @@ export class GamesService {
         // const baseEncoded = btoa(stream.link);
         // const encoded = encodeURI(baseEncoded);
         const encoded = encodeURI(stream.link);
-        const url = `${window.location.origin}/baseball-stream?link=${encoded}`;
+        const url = `${window.location.origin}/#/baseball-stream?link=${encoded}`;
         window.open(url, '_blank');
       }),
       catchError((error: HttpErrorResponse) => {
