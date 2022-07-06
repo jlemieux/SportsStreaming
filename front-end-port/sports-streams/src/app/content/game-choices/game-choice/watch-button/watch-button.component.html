@@ -1,0 +1,12 @@
+<button
+  id="watch"
+  [ngClass]="{
+    'btn': true,
+    'btn-success': !streamError,
+    'btn-danger': streamError,
+    'spinner': loading
+  }"
+  [disabled]="streamError || loading"
+  (click)="watchStream()">
+  {{ buttonText }}
+</button>
