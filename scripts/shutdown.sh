@@ -10,9 +10,21 @@ echo "Process found: $pid"
 re='^[0-9]+$'
 if [[ $pid =~ $re ]]
 then
-    echo "Killing flask server..."
+    echo "Killing flask server $pid..."
     kill -9 $pid
     echo "Killed."
 fi
-sudo shutdown -h now
 
+
+echo "Finding process on port: $NG_PORT"
+pid=$(netstat -tulnp | grep ":$NG_PORT" | awk '{print $7}' | cut -f1 -d"/")
+echo "Process found: $pid"
+
+re='^[0-9]+$'
+if [[ $pid =~ $re ]]
+then
+    echo "Killing js server $pid..."
+    kill -9 $pid
+    echo "Killed."
+fi
+#sudo shutdown -h now
