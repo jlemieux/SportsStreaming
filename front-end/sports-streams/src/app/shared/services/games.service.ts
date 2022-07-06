@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, EMPTY, Observable, ReplaySubject, tap, throwError } from 'rxjs';
+import { catchError, EMPTY, Observable, ReplaySubject, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Game } from '../models/game';
 import { Sport } from '../models/sport';
 import { GameStream, GameStreamError } from '../models/stream';
@@ -40,7 +41,7 @@ export class GamesService {
       this.games[sport].next([]);
       return;
     }
-    this.http.get<Game[]>(`http://localhost:5000/${sport}`).subscribe({
+    this.http.get<Game[]>(`${environment.HOST}/${sport}`).subscribe({
       next: (games: Game[]) => {
         this.games[sport].next(games);
       },
@@ -54,7 +55,7 @@ export class GamesService {
   }
 
   watchStream(id: string): Observable<GameStream> {
-    return this.http.get<GameStream>(`http://localhost:5000/baseball/${id}`).pipe(
+    return this.http.get<GameStream>(`${environment.HOST}/baseball/${id}`).pipe(
       tap((stream: GameStream) => window.open(stream.link, '_blank')),
       catchError((error: HttpErrorResponse) => {
         const message = { gameId: id, reason: 'Error!' };
@@ -70,6 +71,10 @@ export class GamesService {
         return EMPTY;
       })
     );
+  }
+
+  shutdownServer(): Observable<{shutdown: boolean}> {
+    return this.http.post<{shutdown: boolean}>(`${environment.HOST}/shutdown`, {});
   }
 
 }
