@@ -1,0 +1,4 @@
+mode: 'transparent'
+showhost: true
+flow_detail: 0
+scripts: ['/home/pi/.mitmproxy/custom-addons/remove_comma.py']
