@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 NG_PORT=9200
 FLASK_PORT=$((NG_PORT + 1))
 HOST="0.0.0.0"

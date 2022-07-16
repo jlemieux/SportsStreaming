@@ -1,4 +1,3 @@
-<div class="sport-choices-container">
-  <app-sport-choice *ngFor="let sport of sports$ | async" [sport]="sport"></app-sport-choice>
-  <app-shutdown></app-shutdown>
+<div class="sport-choices-container row">
+  <app-sport-choice class="col-3" *ngFor="let sport of sports$ | async" [sport]="sport"></app-sport-choice>
 </div>
