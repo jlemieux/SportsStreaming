@@ -1,6 +1,9 @@
 ## Reverse Proxy
 
-See `external.conf`.
+See `external.conf` for an example.
+
+You do NOT need to allow the ports that you are proxying to. For the `external.conf`
+example, I do not have port `9200` mentioned anywhere in my firewall.
 
 ## Serving static files
 
