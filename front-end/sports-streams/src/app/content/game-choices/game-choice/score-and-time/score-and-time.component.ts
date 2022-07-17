@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
   selector: 'app-score-and-time',
   templateUrl: './score-and-time.component.html',
-  styleUrls: ['./score-and-time.component.scss']
+  styleUrls: ['./score-and-time.component.css']
 })
 export class ScoreAndTimeComponent implements OnInit {
 

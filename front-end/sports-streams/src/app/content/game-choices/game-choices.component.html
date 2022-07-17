@@ -1,4 +1,20 @@
-<div class="game-choices-container" *ngIf="games$ | async as games">
-  <app-no-games-found *ngIf="games.length === 0"></app-no-games-found>
-  <app-game-choice *ngFor="let game of games" [game]="game"></app-game-choice>
-</div>
+<ng-container *ngIf="games$ | async as games; else loading">
+  <app-no-games-found *ngIf="games.length === 0; else gamesList"></app-no-games-found>
+  <ng-template #gamesList>
+    <div class="row" *ngFor="let game of games">
+      <div class="col-12">
+        <app-game-choice [game]="game"></app-game-choice>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>
+
+<ng-template #loading>
+  <div class="row">
+    <div class="col-5"></div>
+    <div class="col-2">
+      <div class="spinner big-spinner horizontal-center"></div>
+    </div>
+    <div class="col-5"></div>
+  </div>
+</ng-template>

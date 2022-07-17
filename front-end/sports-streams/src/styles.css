@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+.horizontal-center {
+  margin: 0 auto;
+  display: block;
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+ 
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner .8s linear infinite;
+}
+
+.big-spinner:before {
+  width: 320px;
+  height: 320px;
+}

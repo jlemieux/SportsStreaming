@@ -1,7 +1,7 @@
-
 <button
   *ngIf="activeSport$ | async as activeSport"
   [ngClass]="{
+    'horizontal-center': true,
     'btn': true,
     'btn-lg': true,
     'btn-secondary': sport !== activeSport,

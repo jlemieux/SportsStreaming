@@ -6,7 +6,7 @@ import { SportsService } from 'src/app/shared/services/sports.service';
 @Component({
   selector: 'app-no-games-found',
   templateUrl: './no-games-found.component.html',
-  styleUrls: ['./no-games-found.component.scss']
+  styleUrls: ['./no-games-found.component.css']
 })
 export class NoGamesFoundComponent implements OnInit {
 

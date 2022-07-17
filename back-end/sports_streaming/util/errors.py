@@ -1,4 +1,3 @@
-import json
 import traceback
 import logging
 from werkzeug.exceptions import HTTPException

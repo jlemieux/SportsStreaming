@@ -6,7 +6,7 @@ import { SportsService } from 'src/app/shared/services/sports.service';
 @Component({
   selector: 'app-sport-choices',
   templateUrl: './sport-choices.component.html',
-  styleUrls: ['./sport-choices.component.scss']
+  styleUrls: ['./sport-choices.component.css']
 })
 export class SportChoicesComponent implements OnInit {
 

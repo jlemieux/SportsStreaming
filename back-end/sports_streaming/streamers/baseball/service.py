@@ -2,10 +2,6 @@ from sports_streaming import util
 from sports_streaming.streamers.models import BaseballStreamer
 from sports_streaming.streams.models import BaseballStream
 
-# # testing only
-# from bs4 import BeautifulSoup
-# import mock_data
-
 
 MLB_STREAMER_TABLE = 'https://sportscentral.io/streams-table/{0}/baseball?new-ui=1'
 
@@ -27,7 +23,6 @@ def _get_weak_spell(game_id):
 
 def get_streamers(game_id):
   soup = util.soup.get_soup(MLB_STREAMER_TABLE.format(game_id))
-  # soup = BeautifulSoup(mock_data.mock_streamers, features="html.parser")
 
   # headers = soup.select_one('#streams table > thead > tr')
   streamers = soup.select('table > tbody > tr')

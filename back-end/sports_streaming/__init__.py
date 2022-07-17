@@ -29,15 +29,7 @@ def create_app():
   app.config.from_object(config)
   CORS(app)
 
-  app.register_blueprint(blueprints.api) # register app level
-
-  # api = Blueprint('sports_streaming', __name__) # app level blueprint
-
-  # # blueprint modules
-  # from sports_streaming.games.baseball.controller import api as baseball_api
-  # api.register_blueprint(baseball_api) # register to 'api', not 'app'
-
-  # app.register_blueprint(api) # register app level
+  app.register_blueprint(blueprints.api)
 
   app.register_error_handler(Exception, util.errors.handle_exception)
 

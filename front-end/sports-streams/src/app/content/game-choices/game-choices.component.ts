@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Game } from 'src/app/shared/models/game';
-import { Sport } from 'src/app/shared/models/sport';
 import { GamesService } from 'src/app/shared/services/games.service';
-import { SportsService } from 'src/app/shared/services/sports.service';
 
 @Component({
   selector: 'app-game-choices',
   templateUrl: './game-choices.component.html',
-  styleUrls: ['./game-choices.component.scss']
+  styleUrls: ['./game-choices.component.css']
 })
 export class GameChoicesComponent implements OnInit {
 

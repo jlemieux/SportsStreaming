@@ -4,7 +4,7 @@ import { Game } from 'src/app/shared/models/game';
 @Component({
   selector: 'app-game-choice',
   templateUrl: './game-choice.component.html',
-  styleUrls: ['./game-choice.component.scss']
+  styleUrls: ['./game-choice.component.css']
 })
 export class GameChoiceComponent implements OnInit {
 

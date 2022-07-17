@@ -1,11 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { GamesService } from 'src/app/shared/services/games.service';
+import { UtilService } from 'src/app/shared/services/util.service';
 
 @Component({
   selector: 'app-shutdown',
   templateUrl: './shutdown.component.html',
-  styleUrls: ['./shutdown.component.scss']
+  styleUrls: ['./shutdown.component.css']
 })
 export class ShutdownComponent implements OnInit {
 
@@ -14,14 +14,14 @@ export class ShutdownComponent implements OnInit {
   loading = false;
   shutdownComplete = false;
 
-  constructor(private gamesService: GamesService) { }
+  constructor(private utilService: UtilService) { }
 
   ngOnInit(): void {
   }
 
   shutdown(): void {
     this.loading = true;
-    this.gamesService.shutdownServer().subscribe({
+    this.utilService.shutdownServer().subscribe({
       error: (err: HttpErrorResponse) => {
         this.shutdownError = true;
         this.loading = false;

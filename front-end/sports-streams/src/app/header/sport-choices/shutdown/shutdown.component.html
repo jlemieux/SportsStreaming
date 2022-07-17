@@ -1,6 +1,7 @@
 <button
   id="shutdown"
   [ngClass]="{
+    'horizontal-center': true,
     'btn': true,
     'btn-warning': !shutdownComplete && !shutdownError,
     'btn-success': shutdownComplete,
