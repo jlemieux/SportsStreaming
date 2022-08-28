@@ -9,3 +9,7 @@ export interface Game {
 export interface BaseballGame extends Game {
   id: string;
 };
+
+export interface FootballGame extends Game {
+  streams_link: string;
+};

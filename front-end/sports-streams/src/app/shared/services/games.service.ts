@@ -31,17 +31,23 @@ export class GamesService {
     });
   }
 
+  private inProgressGamesFirst(games: Game[]): Game[] {
+    const inProgressTokens = ['inning', 'quarter'];
+    const inProgress = games.filter(game => inProgressTokens.some(token => game.time.toLowerCase().includes(token)));
+    const notInProgress = games.filter(game => !inProgressTokens.some(token => game.time.toLowerCase().includes(token)));
+    return inProgress.concat(notInProgress);
+  }
+
   private fetchGames(sport: Sport): void {
-    const supportedSports = [Sport.BASEBALL];
+    const supportedSports = [Sport.BASEBALL, Sport.FOOTBALL];
     if (!supportedSports.includes(sport)) {
       this.games[sport].next([]);
       return;
     }
     this.http.get<Game[]>(`${environment.API}/${sport}`).subscribe({
       next: (games: Game[]) => {
-        const gamesInProgress = games.filter(game => game.time.toLowerCase().includes('inning'));
-        const gamesNotInProgress = games.filter(game => !game.time.toLowerCase().includes('inning'));
-        this.games[sport].next(gamesInProgress.concat(gamesNotInProgress));
+        const sortedGames = this.inProgressGamesFirst(games);
+        this.games[sport].next(sortedGames);
       },
       error: (error: HttpErrorResponse) => {
         // usually only want to show "No Games Found" if its 404, but just do that so its not blank screen

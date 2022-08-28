@@ -14,3 +14,8 @@ class BaseballGame(Game):
   def __init__(self, team1, team2, score, time, link):
     super().__init__(team1, team2, score, time, link)
     self.id = link.split('/')[-1]
+
+class FootballGame(Game):
+  def __init__(self, team1, team2, score, time, link, league):
+    super().__init__(team1, team2, score, time, link)
+    self.league = league

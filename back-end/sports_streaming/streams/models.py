@@ -9,3 +9,7 @@ class Stream(util.printing.DataModel):
 class BaseballStream(Stream):
   def __init__(self, link_from_streamer):
     super().__init__(link_from_streamer)
+
+class FootballStream(Stream):
+  def __init__(self, link_from_streamer):
+    super().__init__(link_from_streamer)

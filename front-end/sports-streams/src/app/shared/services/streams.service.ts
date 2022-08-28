@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { EMPTY, Observable, ReplaySubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Sport } from '../models/sport';
 import { GameStream, GameStreamError } from '../models/stream';
 
 @Injectable({
@@ -15,8 +16,8 @@ export class StreamsService {
 
   constructor(private http: HttpClient) { }
 
-  watchStream(id: string): Observable<GameStream> {
-    return this.http.get<GameStream>(`${environment.API}/baseball/${id}`).pipe(
+  watchStream(id: string, sport: Sport): Observable<GameStream> {
+    return this.http.get<GameStream>(`${environment.API}/${sport}/${id}`).pipe(
       tap((stream: GameStream) => {
         window.open(stream.link, '_blank');
       }),
@@ -28,6 +29,9 @@ export class StreamsService {
           }
           else if (error.error.name === 'NoStreamersFound') {
             message.reason = 'No Streamers';
+          }
+          else if (error.error.name === 'NoGameIdFound') {
+            message.reason = 'No Game ID';
           }
         }
         this.gameStreamError$.next(message);

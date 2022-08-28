@@ -17,6 +17,11 @@ class NoWeakSpellFound(Exception):
     super().__init__(*args)
     self.game_id = kwargs.get('game_id')
 
+class NoGameIdFound(Exception):
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args)
+    self.streams_link = kwargs.get('streams_link')
+
 class NoGamesFound(Exception):
   def __init__(self, *args, **kwargs):
     super().__init__(*args)
@@ -54,6 +59,12 @@ def handle_exception(e):
       'code': 404,
       'name': NoGamesFound.__name__,
       'description': f'No games were found for sport={e.sport}.',
+    }
+  elif isinstance(e, NoGameIdFound):
+    serializable = {
+      'code': 404,
+      'name': NoGameIdFound.__name__,
+      'description': f'No game_id was found for stream={e.streams_link}.',
     }
   else:
     serializable = {
