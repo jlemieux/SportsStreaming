@@ -13,7 +13,10 @@ def get_stream(streamer):
 
 
 def _bypass_tinyurl_site(streamer):
-  soup = util.soup.get_soup(streamer.stream.link_from_streamer)
+  link = streamer.stream.link_from_streamer
+  if 'weakstreams.com' in link:
+    return link
+  soup = util.soup.get_soup(link)
   df_pattern = re.compile("dF\('(.*)'\)")
   df_content = df_pattern.search(soup.script.string).group(1)
 

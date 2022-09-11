@@ -23,7 +23,7 @@ export class GamesService {
         this.games[sport] = new ReplaySubject<Game[]>(1);
         this.fetchGames(sport);
       });
-      this.sportsService.activeSport$.next(Sport.BASEBALL); // default to baseball
+      this.sportsService.activeSport$.next(Sport.FOOTBALL); // default to baseball
     });
 
     this.sportsService.activeSport$.subscribe((sport: Sport) => {
