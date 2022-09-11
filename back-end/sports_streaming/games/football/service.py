@@ -1,9 +1,10 @@
+import logging
 from sports_streaming import util
 from sports_streaming.games.models import FootballGame
 
 
 GAMES = 'https://reddit.nflbite.com/'
-
+LOGGER = logging.getLogger('main-app')
 
 def get_games():
   soup = util.soup.get_soup(GAMES)
@@ -23,7 +24,12 @@ def _parse_games(competitions):
     )[0]
     matches = competition.select('.matches > div')
     for match in matches:
-      games.append(_parse_game(match, competition_name))
+      try:
+        parsed_game = _parse_game(match, competition_name)
+        games.append(parsed_game)
+      except Exception as e:
+        LOGGER.error('Could not parse football game.')
+        LOGGER.error(e)
   return games
 
 def _parse_game(match, competition_name):
